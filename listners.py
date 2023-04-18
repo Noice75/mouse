@@ -51,7 +51,7 @@ def active(arg):
             send.send(fn="active", IP=send.activeIP)
             mhook.suppress()
             khook.suppress()
-            win32api.SetCursorPos((screen_width/2, screen_height/2))
+            win32api.SetCursorPos((683, 384))
             break
         except:
             continue
