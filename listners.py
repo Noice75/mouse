@@ -7,7 +7,7 @@ import mouse
 import keyboard
 
 
-relativeClients = {"R": "192.168.0.1"}
+relativeClients = {"R": "192.168.1.101"}
 screen_width = win32api.GetSystemMetrics(win32con.SM_CXSCREEN)
 screen_height = win32api.GetSystemMetrics(win32con.SM_CYSCREEN)
 border_height = win32api.GetSystemMetrics(win32con.SM_CYBORDER)
@@ -41,9 +41,8 @@ def active(arg):
         if (mhook._listner._running):
             mhook.unSuppress()
             khook.unSuppress()
-            print("Stopping!")
         else:
-            print("Nothing to stop!")
+            pass
     send.activeIP = arg["IP"]
     while True:
         Edge = getEdge()
@@ -52,7 +51,7 @@ def active(arg):
             send.send(fn="active", IP=send.activeIP)
             mhook.suppress()
             khook.suppress()
-            win32api.SetCursorPos((10, 10))
+            win32api.SetCursorPos((screen_width/2, screen_height/2))
             break
         except:
             continue

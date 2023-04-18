@@ -35,7 +35,6 @@ threadedFnDir = {
 
 while True:
     data = pickle.loads(sock.recv(1024))
-    print(data)
     if (data[0]["fn"] in threadedFnDir):
         threading.Thread(
             target=threadedFnDir[data[0]["fn"]], args=(data[0],)).start()
