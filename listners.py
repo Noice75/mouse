@@ -7,7 +7,7 @@ import mouse
 import keyboard
 
 
-relativeClients = {"R": "192.168.1.101"}
+relativeClients = {"R": "192.168.0.0"}
 screen_width = win32api.GetSystemMetrics(win32con.SM_CXSCREEN)
 screen_height = win32api.GetSystemMetrics(win32con.SM_CYSCREEN)
 border_height = win32api.GetSystemMetrics(win32con.SM_CYBORDER)

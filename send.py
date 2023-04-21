@@ -1,6 +1,5 @@
 import socket
 import pickle
-import time
 
 MCAST_GRP = '224.0.0.1'
 MCAST_PORT = 5007
@@ -30,4 +29,4 @@ def sendWithIP(**kwargs):
 
 
 if __name__ == "__main__":
-    send(fn=50, IP="192.168.0.248")
+    sendWithIP(fn=50, IP="192.168.0.181")
