@@ -18,7 +18,10 @@ def setClipboard(arg):
 
 def getClipboard():
     win32clipboard.OpenClipboard()
-    data = win32clipboard.GetClipboardData()
+    if win32clipboard.IsClipboardFormatAvailable(win32clipboard.CF_TEXT):
+        data = win32clipboard.GetClipboardData()
+    else:
+        return None
     win32clipboard.CloseClipboard()
     return data
 
