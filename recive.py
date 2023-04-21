@@ -5,6 +5,7 @@ import keyboard
 import mouse
 import listners
 import threading
+import clipboard
 
 MCAST_GRP = '224.0.0.1'
 MCAST_PORT = 5007
@@ -23,6 +24,7 @@ fnDir = {
     2: mouse.clickMouseButton,
     3: mouse.scroll,
     50: listners.active,
+    51: clipboard.setClipboard,
 }
 
 while True:

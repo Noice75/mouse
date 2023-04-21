@@ -5,6 +5,7 @@ import send
 import time
 import mouse
 import keyboard
+import clipboard
 
 
 relativeClients = {"R": "192.168.0.0"}
@@ -17,7 +18,10 @@ border_height = win32api.GetSystemMetrics(win32con.SM_CYBORDER)
 activeThreads = {}
 rawMouseInput = threading.Thread(target=mouse.getMouseRawInput)
 rawMouseInput.start()
+onCopy = threading.Thread(target=clipboard.onCopy)
+onCopy.start()
 activeThreads["rawMouseInput"] = rawMouseInput
+activeThreads["onCopy"] = onCopy
 mhook = mouse.listner()
 khook = keyboard.listner()
 
