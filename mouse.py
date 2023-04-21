@@ -74,7 +74,7 @@ def wnd_proc(hwnd, msg, wparam, lparam):  # Callback
             captured_outputX, captured_outputY = data.split(
                 "lLastX: ")[-1].split("\n")[0], data.split(
                 "lLastY: ")[-1].split("\n")[0]
-            send.send(fn="move", x=int(float(captured_outputX)) *
+            send.send(fn=1, x=int(float(captured_outputX)) *
                       SENSITIVITY, y=int(float(captured_outputY)) *
                       SENSITIVITY)
         elif head.dwType == RIM_TYPEKEYBOARD:  # If anyone want to convert Keyboard rawinput, GoodLuck!
@@ -146,12 +146,12 @@ class listner:
     def onClick(self, x, y, button, pressed):
         if (send.activeIP == send.HOSTIP):
             return
-        send.send(fn='clickMouseButton', isPressed=pressed, btn=button)
+        send.send(fn=2, isPressed=pressed, btn=button)
 
     def onScroll(self, x, y, dx, dy):
-        print('Scrolled {0} at {1}'.format(
-            'down' if dy < 0 else 'up',
-            (x, y)))
+        if (send.activeIP == send.HOSTIP):
+            return
+        send.send(fn=3, dx=dx, dy=dy)
 
     def startListner(self):
         self._listner = mouse.Listener(
@@ -186,6 +186,10 @@ def clickMouseButton(arg):
 
 def move(arg):
     mouseController.move(arg["x"], arg["y"])
+
+
+def scroll(arg):
+    mouseController.scroll(arg["dx"], arg["dy"])
 
 
 if __name__ == "__main__":

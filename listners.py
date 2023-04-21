@@ -48,7 +48,7 @@ def active(arg):
         Edge = getEdge()
         try:  # If client does not exist in relative borders
             send.activeIP = relativeClients[Edge]
-            send.send(fn="active", IP=send.activeIP)
+            send.send(fn=50, IP=send.activeIP)
             mhook.suppress()
             khook.suppress()
             win32api.SetCursorPos((683, 384))

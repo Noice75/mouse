@@ -24,19 +24,17 @@ sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
 # Defined functions
 fnDir = {
-    'key': keyboard.keyboardInput,
-    'move': mouse.move,
-    'clickMouseButton': mouse.clickMouseButton,
-}
-
-threadedFnDir = {
-    'active': listners.active,
+    0: keyboard.keyboardInput,
+    1: mouse.move,
+    2: mouse.clickMouseButton,
+    3: mouse.scroll,
+    50: listners.active,
 }
 
 while True:
     data = pickle.loads(sock.recv(1024))
-    if (data[0]["fn"] in threadedFnDir):
+    if (data[0]["fn"] >= 50):
         threading.Thread(
-            target=threadedFnDir[data[0]["fn"]], args=(data[0],)).start()
+            target=fnDir[data[0]["fn"]], args=(data[0],)).start()
     else:
         fnDir[data[0]["fn"]](data[0])

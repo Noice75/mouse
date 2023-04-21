@@ -110,12 +110,12 @@ class listner:
     def onPress(self, key):
         if (send.activeIP == send.HOSTIP):
             return
-        send.send(fn="key", isPressed=True, key=key)
+        send.send(fn=0, isPressed=True, key=key)
 
     def onRelease(self, key):
         if (send.activeIP == send.HOSTIP):
             return
-        send.send(fn="key", isPressed=False, key=key)
+        send.send(fn=0, isPressed=False, key=key)
 
     def startListner(self):
         self._listner = keyboard.Listener(

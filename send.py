@@ -14,8 +14,9 @@ sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, MULTICAST_TTL)
 
 
 def send(**kwargs):
+    print(kwargs)
     sock.sendto(pickle.dumps((kwargs, HOSTNAME, HOSTIP)),
-                (activeIP, MCAST_PORT))
+                ("192.168.0.248", MCAST_PORT))
 
 
 def sendALL(**kwargs):
@@ -29,4 +30,4 @@ def sendWithIP(**kwargs):
 
 
 if __name__ == "__main__":
-    send(fn="active", IP=HOSTIP)
+    send(fn=50, IP="192.168.0.248")
