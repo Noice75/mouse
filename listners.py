@@ -8,7 +8,7 @@ import keyboard
 import clipboard
 
 
-relativeClients = {"R": "192.168.0.0"}
+relativeClients = {"L": "192.168.1.103"}
 screen_width = win32api.GetSystemMetrics(win32con.SM_CXSCREEN)
 screen_height = win32api.GetSystemMetrics(win32con.SM_CYSCREEN)
 border_height = win32api.GetSystemMetrics(win32con.SM_CYBORDER)
