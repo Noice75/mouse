@@ -1,5 +1,5 @@
 import win32clipboard
-import time
+from time import sleep
 import send
 
 currentClipboard = None
@@ -18,10 +18,16 @@ def setClipboard(arg):
 
 def getClipboard():
     win32clipboard.OpenClipboard()
+    data = None
+
+    # Checks if clipboard is text
     if win32clipboard.IsClipboardFormatAvailable(win32clipboard.CF_TEXT):
         data = win32clipboard.GetClipboardData()
-    else:
-        return None
+    # Checks if clipboard is a file/folder/image
+    elif win32clipboard.IsClipboardFormatAvailable(win32clipboard.CF_HDROP):
+        data = win32clipboard.GetClipboardData(
+            win32clipboard.CF_HDROP)
+
     win32clipboard.CloseClipboard()
     return data
 
@@ -31,8 +37,12 @@ def onCopy():
     while True:
         clipboardText = getClipboard()
         if (currentClipboard == clipboardText):
-            time.sleep(1)
+            sleep(1)
             continue
         else:
             send.send(fn=51, Text=clipboardText)
             currentClipboard = clipboardText
+
+
+if __name__ == "__main__":
+    onCopy()
