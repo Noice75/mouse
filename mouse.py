@@ -5,9 +5,9 @@ from ctypes import c_int32, c_int,  c_long, Structure, CFUNCTYPE, POINTER
 from ctypes.wintypes import DWORD, MSG, WPARAM, LPARAM, UINT
 import ctypeswrappers as cws
 import send
+import runtimeREF
 
 LPMSG = POINTER(MSG)
-SENSITIVITY = send.SENSITIVITY
 
 HWND_MESSAGE = -3
 
@@ -52,7 +52,7 @@ NULL = c_int(0)
 
 
 def wnd_proc(hwnd, msg, wparam, lparam):  # Callback
-    if (send.activeIP == send.HOSTIP):
+    if (runtimeREF.ACTIVEIP == runtimeREF.HOSTIP):
         return cws.DefWindowProc(hwnd, msg, wparam, lparam)
     if msg == WM_INPUT:
         size = UINT(0)
@@ -75,8 +75,8 @@ def wnd_proc(hwnd, msg, wparam, lparam):  # Callback
                 "lLastX: ")[-1].split("\n")[0], data.split(
                 "lLastY: ")[-1].split("\n")[0]
             send.send(fn=1, x=int(float(captured_outputX)) *
-                      SENSITIVITY, y=int(float(captured_outputY)) *
-                      SENSITIVITY)
+                      runtimeREF.SENSITIVITY, y=int(float(captured_outputY)) *
+                      runtimeREF.SENSITIVITY)
         elif head.dwType == RIM_TYPEKEYBOARD:  # If anyone want to convert Keyboard rawinput, GoodLuck!
             data = ri.data.keyboard
             if data.VKey == 0x1B:
@@ -144,12 +144,12 @@ class listner:
         self.startListner()
 
     def onClick(self, x, y, button, pressed):
-        if (send.activeIP == send.HOSTIP):
+        if (runtimeREF.ACTIVEIP == runtimeREF.HOSTIP):
             return
         send.send(fn=2, isPressed=pressed, btn=button)
 
     def onScroll(self, x, y, dx, dy):
-        if (send.activeIP == send.HOSTIP):
+        if (runtimeREF.ACTIVEIP == runtimeREF.HOSTIP):
             return
         send.send(fn=3, dx=dx, dy=dy)
 

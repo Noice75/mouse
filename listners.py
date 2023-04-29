@@ -6,9 +6,10 @@ import time
 import mouse
 import keyboard
 import clipboard
+import runtimeREF
 
 
-relativeClients = {"L": "192.168.1.103"}
+relativeClients = {"L": "192.168.0.1"}
 screen_width = win32api.GetSystemMetrics(win32con.SM_CXSCREEN)
 screen_height = win32api.GetSystemMetrics(win32con.SM_CYSCREEN)
 border_height = win32api.GetSystemMetrics(win32con.SM_CYBORDER)
@@ -41,18 +42,19 @@ def getEdge():
 
 
 def active(arg):
-    if (arg["IP"] == send.HOSTIP):
+    if (arg["ACTIVEIP"] == runtimeREF.HOSTIP):
         if (mhook._listner._running):
             mhook.unSuppress()
             khook.unSuppress()
         else:
             pass
-    send.activeIP = arg["IP"]
+    runtimeREF.ACTIVEIP = arg["ACTIVEIP"]
     while True:
         Edge = getEdge()
         try:  # If client does not exist in relative borders
-            send.activeIP = relativeClients[Edge]
-            send.send(fn=50, IP=send.activeIP)
+            runtimeREF.ACTIVEIP = relativeClients[Edge]
+            send.sendALL(fn=50, ACTIVEIP=runtimeREF.ACTIVEIP)
+            print("Switching")
             mhook.suppress()
             khook.suppress()
             win32api.SetCursorPos((683, 384))

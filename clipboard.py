@@ -1,13 +1,14 @@
 import win32clipboard
 from time import sleep
 import send
+import runtimeREF
 
 currentClipboard = None
 
 
 def setClipboard(arg):
     global currentClipboard
-    if (send.activeIP == send.HOSTIP):
+    if (runtimeREF.ACTIVEIP == runtimeREF.HOSTIP):
         return
     win32clipboard.OpenClipboard()
     win32clipboard.EmptyClipboard()
@@ -40,7 +41,10 @@ def onCopy():
             sleep(1)
             continue
         else:
-            send.send(fn=51, Text=clipboardText)
+            try:
+                send.sendALL(fn=51, Text=clipboardText)
+            except:
+                continue
             currentClipboard = clipboardText
 
 

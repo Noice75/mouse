@@ -1,10 +1,14 @@
 import socket
 import struct
 import pickle
-import keyboard
-import mouse
+import runtimeREF
+from runtimeREF import fnDir
 import listners
 import threading
+import server
+import client
+import mouse
+import keyboard
 import clipboard
 
 MCAST_GRP = '224.0.0.1'
@@ -23,14 +27,43 @@ fnDir = {
     1: mouse.move,
     2: mouse.clickMouseButton,
     3: mouse.scroll,
+    4: runtimeREF.setActiveIP,
     50: listners.active,
     51: clipboard.setClipboard,
 }
+fnDir = runtimeREF.fnDir
+def clientConnListner():
+    while True:
+        try:
+            data = client.connection.recv(1024)
+        except ConnectionResetError:
+            print("Server disconnected")
+            break
+        if not data:
+            print("Server disconnected")
+            break
+        # unpickling after checks to prevent error `EOFError: Ran out of input`
+        data = pickle.loads(data)
+        print(data)
+        if (data["fn"] >= 50):  # Threaded function needs to have key > 50
+            threading.Thread(
+                target=fnDir[data["fn"]], args=(data,)).start()
+        else:
+            fnDir[data["fn"]](data)
+
+
+if (client.getServer()):
+    threading.Thread(target=clientConnListner).start()
+else:
+    server = threading.Thread(target=server.server)
+    server.start()
+    listners.activeThreads["server"] = server
+    listners.active({"ACTIVEIP":runtimeREF.ACTIVEIP})
 
 while True:
     data = pickle.loads(sock.recv(1024))
-    if (data[0]["fn"] >= 50):  # Threaded function needs to have key > 50
+    if (data["fn"] >= 50):  # Threaded function needs to have key > 50
         threading.Thread(
-            target=fnDir[data[0]["fn"]], args=(data[0],)).start()
+            target=fnDir[data["fn"]], args=(data,)).start()
     else:
-        fnDir[data[0]["fn"]](data[0])
+        fnDir[data["fn"]](data)

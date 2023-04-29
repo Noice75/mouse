@@ -2,6 +2,7 @@ import send
 from pynput import keyboard
 from pynput.keyboard import Controller
 import ctypes
+import runtimeREF
 from ctypes import c_int, c_uint, Structure, WINFUNCTYPE, POINTER
 from ctypes.wintypes import WORD, DWORD, BOOL, HHOOK, MSG, LPWSTR, WCHAR, WPARAM, LPARAM, LONG, HMODULE, LPCWSTR, HINSTANCE, HWND
 
@@ -108,12 +109,12 @@ class listner:
         self.startListner()
 
     def onPress(self, key):
-        if (send.activeIP == send.HOSTIP):
+        if (runtimeREF.ACTIVEIP == runtimeREF.HOSTIP):
             return
         send.send(fn=0, isPressed=True, key=key)
 
     def onRelease(self, key):
-        if (send.activeIP == send.HOSTIP):
+        if (runtimeREF.ACTIVEIP == runtimeREF.HOSTIP):
             return
         send.send(fn=0, isPressed=False, key=key)
 
