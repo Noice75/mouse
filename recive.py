@@ -9,7 +9,7 @@ import server
 import client
 import mouse
 import keyboard
-import clipboard
+# import clipboard
 
 MCAST_GRP = '224.0.0.1'
 MCAST_PORT = 5007
@@ -29,7 +29,7 @@ fnDir = {
     3: mouse.scroll,
     4: listners.setActiveIP,
     50: listners.active,
-    51: clipboard.setClipboard,
+    # 51: clipboard.setClipboard,
 }
 
 def clientConnListner():

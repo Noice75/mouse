@@ -5,7 +5,7 @@ import send
 import time
 import mouse
 import keyboard
-import clipboard
+# import clipboard
 import runtimeREF
 
 
@@ -19,10 +19,10 @@ border_height = win32api.GetSystemMetrics(win32con.SM_CYBORDER)
 activeThreads = {}
 rawMouseInput = threading.Thread(target=mouse.getMouseRawInput)
 rawMouseInput.start()
-onCopy = threading.Thread(target=clipboard.onCopy)
-onCopy.start()
+# onCopy = threading.Thread(target=clipboard.onCopy)
+# onCopy.start()
 activeThreads["rawMouseInput"] = rawMouseInput
-activeThreads["onCopy"] = onCopy
+# activeThreads["onCopy"] = onCopy
 mhook = mouse.listner()
 khook = keyboard.listner()
 
@@ -46,6 +46,7 @@ def active(arg):
         if (mhook._listner._running):
             mhook.unSuppress()
             khook.unSuppress()
+            print("Unsupressing")
         else:
             pass
     runtimeREF.ACTIVEIP = arg["ACTIVEIP"]
