@@ -9,7 +9,7 @@ import clipboard
 import runtimeREF
 
 
-relativeClients = {"L": "192.168.0.1"}
+relativeClients = {"L": "192.168.1.102"}
 screen_width = win32api.GetSystemMetrics(win32con.SM_CXSCREEN)
 screen_height = win32api.GetSystemMetrics(win32con.SM_CYSCREEN)
 border_height = win32api.GetSystemMetrics(win32con.SM_CYBORDER)
@@ -49,6 +49,7 @@ def active(arg):
         else:
             pass
     runtimeREF.ACTIVEIP = arg["ACTIVEIP"]
+    print("StartingEDGE!")
     while True:
         Edge = getEdge()
         try:  # If client does not exist in relative borders
@@ -61,6 +62,14 @@ def active(arg):
             break
         except:
             continue
+
+def setActiveIP(arg):
+    runtimeREF.ACTIVEIP = arg["ACTIVEIP"]
+    if(runtimeREF.ACTIVEIP != runtimeREF.HOSTIP):
+        mhook.suppress()
+        khook.suppress()
+        win32api.SetCursorPos((683, 384))
+    print(runtimeREF.ACTIVEIP)
 
 
 if __name__ == "__main__":

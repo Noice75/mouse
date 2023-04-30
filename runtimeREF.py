@@ -8,8 +8,3 @@ HOSTIP = s.getsockname()[0]
 ACTIVEIP = s.getsockname()[0]
 ISSERVER = False
 fnDir = None
-
-def setActiveIP(arg):
-    global ACTIVEIP
-    ACTIVEIP = arg["ACTIVEIP"]
-    print(ACTIVEIP)

@@ -9,14 +9,14 @@ clients = {}
 
 
 def send(arg):
-    for client_sock, client_address in clients.items():
-        if client_address[0] == arg["IP"]:
-            client_sock.sendall(arg)
+    for clientSock, clientAddress in clients.items():
+        if clientAddress[0] == arg["IP"]:
+            clientSock.sendall(pickle.dumps(arg))
 
 
 def sendAll(arg):
-    for client_sock in clients.items():
-        client_sock.sendall(arg)
+    for clientSock, _ in clients.items():
+        clientSock.sendall(pickle.dumps(arg))
 
 
 def onClientConnect(clientSocket):
@@ -63,6 +63,11 @@ def server():
                     send(data)
                 elif (data["IP"] == None):
                     sendAll(data)
+                    if (data["fn"] >= 50):  # Threaded function needs to have key > 50
+                        threading.Thread(
+                            target=runtimeREF.fnDir[data["fn"]], args=(data,)).start()
+                    else:
+                        runtimeREF.fnDir[data["fn"]](data)
                 elif (data["IP"] == runtimeREF.HOSTIP):
                     if (data["fn"] >= 50):  # Threaded function needs to have key > 50
                         threading.Thread(
@@ -73,3 +78,4 @@ def server():
 
 if __name__ == "__main__":
     server()
+    sendAll({"IP":"192.168.1.1"})

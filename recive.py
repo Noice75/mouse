@@ -27,11 +27,11 @@ fnDir = {
     1: mouse.move,
     2: mouse.clickMouseButton,
     3: mouse.scroll,
-    4: runtimeREF.setActiveIP,
+    4: listners.setActiveIP,
     50: listners.active,
     51: clipboard.setClipboard,
 }
-fnDir = runtimeREF.fnDir
+
 def clientConnListner():
     while True:
         try:
@@ -58,10 +58,11 @@ else:
     server = threading.Thread(target=server.server)
     server.start()
     listners.activeThreads["server"] = server
-    listners.active({"ACTIVEIP":runtimeREF.ACTIVEIP})
+    threading.Thread(target=listners.active,args=({"ACTIVEIP":runtimeREF.ACTIVEIP},)).start()
 
 while True:
     data = pickle.loads(sock.recv(1024))
+    print(data)
     if (data["fn"] >= 50):  # Threaded function needs to have key > 50
         threading.Thread(
             target=fnDir[data["fn"]], args=(data,)).start()

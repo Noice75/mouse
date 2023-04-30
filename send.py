@@ -27,16 +27,16 @@ def sendWithIP(**kwargs): #udp
     
 def sendALL(**kwargs): #tcp
     if(runtimeREF.ISSERVER):
-        server.sendAll(pickle.dumps(kwargs))
+        server.sendAll(kwargs)
         return
     kwargs["IP"] = None #When IP = None, Server Sends data to all clients
-    client.send(pickle.dumps(kwargs))
+    client.send(kwargs)
 
 def tcpSend(**kwargs): #tcp
     if(runtimeREF.ISSERVER):
-        server.send(pickle.dumps(kwargs))
+        server.send(kwargs)
         return
-    client.send(pickle.dumps(kwargs))
+    client.send(kwargs)
 
 
 
