@@ -9,7 +9,7 @@ import keyboard
 import runtimeREF
 
 
-relativeClients = {"L": "192.168.1.102"}
+relativeClients = {"L": "192.168.1.105"}
 screen_width = win32api.GetSystemMetrics(win32con.SM_CXSCREEN)
 screen_height = win32api.GetSystemMetrics(win32con.SM_CYSCREEN)
 border_height = win32api.GetSystemMetrics(win32con.SM_CYBORDER)
@@ -55,11 +55,11 @@ def active(arg):
         Edge = getEdge()
         try:  # If client does not exist in relative borders
             runtimeREF.ACTIVEIP = relativeClients[Edge]
-            send.sendALL(fn=50, ACTIVEIP=runtimeREF.ACTIVEIP)
-            print("Switching")
             mhook.suppress()
             khook.suppress()
             win32api.SetCursorPos((683, 384))
+            print("Switching")
+            send.sendALL(fn=50, ACTIVEIP=runtimeREF.ACTIVEIP)
             break
         except:
             continue
