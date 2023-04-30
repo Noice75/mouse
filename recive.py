@@ -2,7 +2,6 @@ import socket
 import struct
 import pickle
 import runtimeREF
-from runtimeREF import fnDir
 import listners
 import threading
 import server
@@ -22,7 +21,7 @@ mreq = struct.pack("4sl", socket.inet_aton(MCAST_GRP), socket.INADDR_ANY)
 sock.setsockopt(socket.IPPROTO_IP, socket.IP_ADD_MEMBERSHIP, mreq)
 
 # Defined functions
-fnDir = {
+runtimeREF.fnDir = {
     0: keyboard.keyboardInput,
     1: mouse.move,
     2: mouse.clickMouseButton,
@@ -31,7 +30,7 @@ fnDir = {
     50: listners.active,
     # 51: clipboard.setClipboard,
 }
-
+fnDir = runtimeREF.fnDir
 def clientConnListner():
     while True:
         try:
