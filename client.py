@@ -10,7 +10,7 @@ threads = []
 
 
 def send(arg):
-    connection.send(arg)
+    connection.send(pickle.dumps(arg))
 
 
 def connect(ip_address):
@@ -44,6 +44,7 @@ def getServer():
 
 if __name__ == "__main__":
     if (getServer()):
+        send("UwU")
         while True:
             try:
                 data = connection.recv(1024)
