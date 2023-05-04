@@ -47,15 +47,23 @@ def server():
                 try:
                     data = sock.recv(1024)
                 except ConnectionResetError:
-                    del clients[sock]
+                    if(clients[sock][0] == runtimeREF.ACTIVEIP):
+                        del clients[sock]
+                        runtimeREF.ACTIVEIP = runtimeREF.HOSTIP
+                        sendAll({"fn":4,"ACTIVEIP":runtimeREF.ACTIVEIP})
+                    else:
+                        del clients[sock]
                     print("Client disconnected")
                     continue
                 if not data:
                     # remove client from list of clients if connection is closed
-                    del clients[sock]
+                    if(clients[sock][0] == runtimeREF.ACTIVEIP):
+                        del clients[sock]
+                        runtimeREF.ACTIVEIP = runtimeREF.HOSTIP
+                        sendAll({"fn":4,"ACTIVEIP":runtimeREF.ACTIVEIP})
+                    else:
+                        del clients[sock]
                     print("Client disconnected")
-                    # send data back to the client that sent it
-                    # sock.sendall(data)
                     continue
                 # unpickling after checks to prevent error `EOFError: Ran out of input`
                 data = pickle.loads(data)

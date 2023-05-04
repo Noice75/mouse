@@ -29,7 +29,11 @@ khook = keyboard.listner()
 
 def getEdge():
     while True:
-        cursor_x, cursor_y = win32api.GetCursorPos()
+        try:
+            cursor_x, cursor_y = win32api.GetCursorPos()
+        except:
+            time.sleep(0.1)
+            continue
         if cursor_x == 0:
             return "L", cursor_x, cursor_y  # LEFT
         elif cursor_x == screen_width - 1:
