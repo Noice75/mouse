@@ -23,8 +23,8 @@ def sendAll(arg):
 def onClientConnect(clientSocket, clientAddr):
     global clients
     sendAll({"fn":53, "Task":0, "Addr":clientAddr[0]})
-    runtimeREF.clients.append(clientAddr[0])
     clientSocket.send(pickle.dumps({"fn":54,"ACTIVEIP":runtimeREF.ACTIVEIP, "Task":2, "Clients": runtimeREF.clients}))
+    runtimeREF.clients.append(clientAddr[0])
     clients[clientSocket] = clientAddr
 
 def onClientDisconnect(sock):
@@ -47,6 +47,7 @@ def server():
     print(f"Server listening on {runtimeREF.HOSTIP}:{port}")
     runtimeREF.ACTIVEIP = runtimeREF.HOSTIP
     runtimeREF.ISSERVER = True
+    runtimeREF.clients.append(runtimeREF.HOSTIP)
     while True:
         # wait for incoming data on the socket
         read_sockets, _, _ = select.select([s] + list(clients.keys()), [], [])
