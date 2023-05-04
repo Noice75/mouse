@@ -46,6 +46,7 @@ def onCopy():
             except:
                 continue
             currentClipboard = clipboardText
+            print(currentClipboard)
 
 
 if __name__ == "__main__":

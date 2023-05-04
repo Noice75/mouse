@@ -28,6 +28,7 @@ def server():
     s.bind((runtimeREF.HOSTIP, port))
     s.listen(0)  # Set the maximum number of queued connections to infinity
     print(f"Server listening on {runtimeREF.HOSTIP}:{port}")
+    runtimeREF.ACTIVEIP = runtimeREF.HOSTIP
     runtimeREF.ISSERVER = True
     while True:
         # wait for incoming data on the socket
