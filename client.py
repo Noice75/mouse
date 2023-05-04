@@ -18,10 +18,10 @@ def connect(ip_address):
     try:
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.settimeout(1)
-        s.connect((ip_address, 6969))
+        s.connect((ip_address, {TCP_PORT}))
         connection = s
         connection.settimeout(None)
-        print(f"Server at {ip_address}:505")
+        print(f"Server at {ip_address}:{TCP_PORT}")
     except:
         s.close()
         pass
