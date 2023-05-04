@@ -26,10 +26,10 @@ runtimeREF.fnDir = {
     1: mouse.move,
     2: mouse.clickMouseButton,
     3: mouse.scroll,
-    4: listners.setActiveIP,
-    5: runtimeREF.updateClients,
     50: listners.active,
     51: clipboard.setClipboard,
+    52: listners.setActiveIP,
+    53: runtimeREF.updateClients,
 }
 fnDir = runtimeREF.fnDir
 def clientConnListner():

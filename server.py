@@ -3,6 +3,7 @@ import select
 import pickle
 import runtimeREF
 import threading
+import time
 
 port = 6969
 clients = {}
@@ -23,8 +24,9 @@ def onClientConnect(clientSocket, clientAddr):
     global clients
     sendAll({"fn":5, "Task":0, "Addr":clientAddr[0]})
     runtimeREF.clients.append(clientAddr[0])
-    clientSocket.send(pickle.dumps({"fn":4,"ACTIVEIP":runtimeREF.ACTIVEIP}))
-    clientSocket.send(pickle.dumps({"fn":5, "Task":0, "Addr":clientAddr[0]}))
+    clientSocket.send(pickle.dumps({"fn":52,"ACTIVEIP":runtimeREF.ACTIVEIP}))
+    time.sleep(1)
+    clientSocket.send(pickle.dumps({"fn":53, "Task":0, "Addr":clientAddr[0]}))
     clients[clientSocket] = clientAddr
 
 def onClientDisconnect(sock):
@@ -33,10 +35,10 @@ def onClientDisconnect(sock):
     del clients[sock]
     if(disconnectedClientAddr == runtimeREF.ACTIVEIP):
         runtimeREF.ACTIVEIP = runtimeREF.HOSTIP
-        sendAll({"fn":4,"ACTIVEIP":runtimeREF.ACTIVEIP})
+        sendAll({"fn":52,"ACTIVEIP":runtimeREF.ACTIVEIP})
         threading.Thread(target=runtimeREF.fnDir[50], args=({"ACTIVEIP":runtimeREF.ACTIVEIP},)).start()
     # remove client from list of clients if connection is closed
-    sendAll({"fn":5, "Task":1, "Addr":disconnectedClientAddr})
+    sendAll({"fn":53, "Task":1, "Addr":disconnectedClientAddr})
     runtimeREF.clients.remove(disconnectedClientAddr)
 
 
