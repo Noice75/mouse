@@ -45,7 +45,6 @@ def clientConnListner():
             break
         # unpickling after checks to prevent error `EOFError: Ran out of input`
         data = pickle.loads(data)
-        print(data)
         if (data["fn"] >= 50):  # Threaded function needs to have key > 50
             threading.Thread(
                 target=fnDir[data["fn"]], args=(data,)).start()
@@ -63,7 +62,6 @@ else:
 
 while True:
     data = pickle.loads(sock.recv(1024))
-    print(data)
     if (data["fn"] >= 50):  # Threaded function needs to have key > 50
         threading.Thread(
             target=fnDir[data["fn"]], args=(data,)).start()

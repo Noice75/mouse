@@ -30,7 +30,6 @@ khook = keyboard.listner()
 def getEdge():
     currentEdge = None
     while True:
-        print(runtimeREF.clients)
         try:
             cursor_x, cursor_y = win32api.GetCursorPos()
             if cursor_x == 0:
@@ -68,7 +67,6 @@ def active(arg):
         try:  # If client does not exist in relative borders
             runtimeREF.ACTIVEIP = relativeClients[Edge[0]]
             send.sendALL(fn=50, ACTIVEIP=runtimeREF.ACTIVEIP, Width=Edge[1], Height=Edge[2])
-            print("Switching")
             mhook.suppress()
             khook.suppress()
             win32api.SetCursorPos((683, 384))
