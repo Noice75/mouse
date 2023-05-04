@@ -22,9 +22,9 @@ def sendAll(arg):
 def onClientConnect(clientSocket, clientAddr):
     global clients
     clients[clientSocket] = clientAddr
-    runtimeREF.clients.append(clientAddr)
+    runtimeREF.clients.append(clientAddr[0])
     clientSocket.sendall(pickle.dumps({"fn":4,"ACTIVEIP":runtimeREF.ACTIVEIP}))
-    sendAll({"fn":5, "Task":0, "Addr":clientAddr})
+    sendAll({"fn":5, "Task":0, "Addr":clientAddr[0]})
 
 def onClientDisconnect(sock):
     global clients

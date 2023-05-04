@@ -33,22 +33,22 @@ def getEdge():
         print(runtimeREF.clients)
         try:
             cursor_x, cursor_y = win32api.GetCursorPos()
+            if cursor_x == 0:
+                currentEdge = "L" # LEFT
+            elif cursor_x == screen_width - 1:
+                currentEdge =  "R" # RIGHT
+            elif cursor_y == 0:
+                currentEdge =  "T" # TOP
+            elif cursor_y == screen_height - border_height:
+                currentEdge =  "B" # BOTTOM
+            if(currentEdge != None and relativeClients[currentEdge] in runtimeREF.clients): # If client is online
+                return currentEdge, cursor_x, cursor_y
+            else:
+                currentEdge = None
+            time.sleep(0.1)
         except:
             time.sleep(0.1)
             continue
-        if cursor_x == 0:
-            currentEdge = "L" # LEFT
-        elif cursor_x == screen_width - 1:
-            currentEdge =  "R" # RIGHT
-        elif cursor_y == 0:
-            currentEdge =  "T" # TOP
-        elif cursor_y == screen_height - border_height:
-            currentEdge =  "B" # BOTTOM
-        if(currentEdge != None and relativeClients[currentEdge] in runtimeREF.clients): # If client is online
-            return currentEdge, cursor_x, cursor_y
-        else:
-            currentEdge = None
-        time.sleep(0.1)
 
 
 def active(arg):
