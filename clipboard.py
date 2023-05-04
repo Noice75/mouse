@@ -38,7 +38,7 @@ def onCopy():
     while True:
         clipboardText = getClipboard()
         if (currentClipboard == clipboardText):
-            sleep(1)
+            sleep(0.5)
             continue
         else:
             try:
