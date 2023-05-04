@@ -30,7 +30,6 @@ khook = keyboard.listner()
 def getEdge():
     while True:
         cursor_x, cursor_y = win32api.GetCursorPos()
-        print(cursor_x,cursor_y)
         if cursor_x == 0:
             return "L", cursor_x, cursor_y  # LEFT
         elif cursor_x == screen_width - 1:
@@ -45,7 +44,10 @@ def getEdge():
 def active(arg):
     if (arg["ACTIVEIP"] == runtimeREF.HOSTIP):
         if (mhook._listner._running):
-            win32api.SetCursorPos((arg["Width"], 5))
+            try:
+                win32api.SetCursorPos((arg["Width"], 5))
+            except:
+                pass
             mhook.unSuppress()
             khook.unSuppress()
             print("Unsupressing")
