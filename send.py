@@ -12,7 +12,6 @@ sock.setsockopt(socket.IPPROTO_IP, socket.IP_MULTICAST_TTL, MULTICAST_TTL)
 
 
 def send(**kwargs): #udp
-    print(kwargs)
     sock.sendto(pickle.dumps(kwargs),
                 (runtimeREF.ACTIVEIP, MCAST_PORT))
     

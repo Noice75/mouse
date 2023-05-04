@@ -73,7 +73,6 @@ def server():
                     continue
                 # unpickling after checks to prevent error `EOFError: Ran out of input`
                 data = pickle.loads(data)
-                print(f"Received data from client: {data}")
                 if (data["IP"] != runtimeREF.HOSTIP and data["IP"] != None):
                     send(data)
                 elif (data["IP"] == None):
