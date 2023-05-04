@@ -28,20 +28,26 @@ khook = keyboard.listner()
 
 
 def getEdge():
+    currentEdge = None
     while True:
+        print(runtimeREF.clients)
         try:
             cursor_x, cursor_y = win32api.GetCursorPos()
         except:
             time.sleep(0.1)
             continue
         if cursor_x == 0:
-            return "L", cursor_x, cursor_y  # LEFT
+            currentEdge = "L" # LEFT
         elif cursor_x == screen_width - 1:
-            return "R", cursor_x, cursor_y  # RIGHT
+            currentEdge =  "R" # RIGHT
         elif cursor_y == 0:
-            return "T", cursor_x, cursor_y  # TOP
+            currentEdge =  "T" # TOP
         elif cursor_y == screen_height - border_height:
-            return "B", cursor_x, cursor_y  # BOTTOM
+            currentEdge =  "B" # BOTTOM
+        if(currentEdge != None and relativeClients[currentEdge] in runtimeREF.clients): # If client is online
+            return currentEdge, cursor_x, cursor_y
+        else:
+            currentEdge = None
         time.sleep(0.1)
 
 
@@ -60,14 +66,13 @@ def active(arg):
     while True:
         Edge = getEdge()
         try:  # If client does not exist in relative borders
-            if(relativeClients[Edge[0]] in runtimeREF.clients): # If client is online
-                runtimeREF.ACTIVEIP = relativeClients[Edge[0]]
-                send.sendALL(fn=50, ACTIVEIP=runtimeREF.ACTIVEIP, Width=Edge[1], Height=Edge[2])
-                print("Switching")
-                mhook.suppress()
-                khook.suppress()
-                win32api.SetCursorPos((683, 384))
-                break
+            runtimeREF.ACTIVEIP = relativeClients[Edge[0]]
+            send.sendALL(fn=50, ACTIVEIP=runtimeREF.ACTIVEIP, Width=Edge[1], Height=Edge[2])
+            print("Switching")
+            mhook.suppress()
+            khook.suppress()
+            win32api.SetCursorPos((683, 384))
+            break
         except:
             continue
 

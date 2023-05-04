@@ -22,9 +22,9 @@ def sendAll(arg):
 def onClientConnect(clientSocket, clientAddr):
     global clients
     clients[clientSocket] = clientAddr
-    runtimeREF.clients = list(clients.values())
+    runtimeREF.clients.append(clientAddr)
     clientSocket.sendall(pickle.dumps({"fn":4,"ACTIVEIP":runtimeREF.ACTIVEIP}))
-    sendAll({"fn":5,"Clients":runtimeREF.clients})
+    sendAll({"fn":5, "Task":0, "Addr":clientAddr})
 
 def onClientDisconnect(sock):
     global clients
@@ -33,9 +33,9 @@ def onClientDisconnect(sock):
         sendAll({"fn":4,"ACTIVEIP":runtimeREF.ACTIVEIP})
         threading.Thread(target=runtimeREF.fnDir[50], args=({"ACTIVEIP":runtimeREF.ACTIVEIP},)).start()
     # remove client from list of clients if connection is closed
+    sendAll({"fn":5, "Task":1, "Addr":clients[sock][0]})
+    runtimeREF.clients.remove(clients[sock][0])
     del clients[sock]
-    runtimeREF.clients = list(clients.values())
-    sendAll({"fn":5,"Clients":runtimeREF.clients})
 
 
 def server():

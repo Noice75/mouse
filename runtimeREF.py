@@ -12,4 +12,7 @@ clients = []
 
 def updateClients(arg):
     global clients
-    clients = arg["Clients"]
+    if(arg["Task"] == 0):
+        clients.append(arg["Addr"])
+    elif(arg["Task"] == 1):
+        clients.remove(arg["Addr"])
