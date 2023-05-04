@@ -28,14 +28,15 @@ def onClientConnect(clientSocket, clientAddr):
 
 def onClientDisconnect(sock):
     global clients
-    if(clients[sock][0] == runtimeREF.ACTIVEIP):
+    disconnectedClientAddr = clients[sock][0]
+    del clients[sock]
+    if(disconnectedClientAddr == runtimeREF.ACTIVEIP):
         runtimeREF.ACTIVEIP = runtimeREF.HOSTIP
         sendAll({"fn":4,"ACTIVEIP":runtimeREF.ACTIVEIP})
         threading.Thread(target=runtimeREF.fnDir[50], args=({"ACTIVEIP":runtimeREF.ACTIVEIP},)).start()
     # remove client from list of clients if connection is closed
-    sendAll({"fn":5, "Task":1, "Addr":clients[sock][0]})
-    runtimeREF.clients.remove(clients[sock][0])
-    del clients[sock]
+    sendAll({"fn":5, "Task":1, "Addr":disconnectedClientAddr})
+    runtimeREF.clients.remove(disconnectedClientAddr)
 
 
 def server():
