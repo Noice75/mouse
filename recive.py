@@ -30,6 +30,7 @@ runtimeREF.fnDir = {
     51: clipboard.setClipboard,
     52: listners.setActiveIP,
     53: runtimeREF.updateClients,
+    54: client.onConnect,
 }
 fnDir = runtimeREF.fnDir
 def clientConnListner():

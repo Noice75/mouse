@@ -16,4 +16,6 @@ def updateClients(arg):
         clients.append(arg["Addr"])
     elif(arg["Task"] == 1):
         clients.remove(arg["Addr"])
-    print(f"Added Client {arg['Addr']}")
+    elif(arg["Task"] == 2):
+        clients = arg["Clients"]
+    print(clients)

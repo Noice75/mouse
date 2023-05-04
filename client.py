@@ -12,6 +12,9 @@ threads = []
 def send(arg):
     connection.send(pickle.dumps(arg))
 
+def onConnect(arg):
+    threading.Thread(target=runtimeREF.fnDir[52], args=(arg,)).start()
+    threading.Thread(target=runtimeREF.updateClients, args=(arg,)).start()
 
 def connect(ip_address):
     global connection
