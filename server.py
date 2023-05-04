@@ -24,7 +24,7 @@ def onClientConnect(clientSocket, clientAddr):
     sendAll({"fn":5, "Task":0, "Addr":clientAddr[0]})
     runtimeREF.clients.append(clientAddr[0])
     clientSocket.send(pickle.dumps({"fn":4,"ACTIVEIP":runtimeREF.ACTIVEIP}))
-    clientSocket.sendall(pickle.dumps({"fn":5, "Task":0, "Addr":clientAddr[0]}))
+    clientSocket.send(pickle.dumps({"fn":5, "Task":0, "Addr":clientAddr[0]}))
     clients[clientSocket] = clientAddr
 
 def onClientDisconnect(sock):
