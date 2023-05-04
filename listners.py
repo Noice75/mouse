@@ -54,21 +54,20 @@ def active(arg):
                 pass
             mhook.unSuppress()
             khook.unSuppress()
-            print("Unsupressing")
         else:
             pass
     runtimeREF.ACTIVEIP = arg["ACTIVEIP"]
-    print("StartingEDGE!")
     while True:
         Edge = getEdge()
         try:  # If client does not exist in relative borders
-            runtimeREF.ACTIVEIP = relativeClients[Edge[0]]
-            send.sendALL(fn=50, ACTIVEIP=runtimeREF.ACTIVEIP, Width=Edge[1], Height=Edge[2])
-            print("Switching")
-            mhook.suppress()
-            khook.suppress()
-            win32api.SetCursorPos((683, 384))
-            break
+            if(relativeClients[Edge[0]] in runtimeREF.clients): # If client is online
+                runtimeREF.ACTIVEIP = relativeClients[Edge[0]]
+                send.sendALL(fn=50, ACTIVEIP=runtimeREF.ACTIVEIP, Width=Edge[1], Height=Edge[2])
+                print("Switching")
+                mhook.suppress()
+                khook.suppress()
+                win32api.SetCursorPos((683, 384))
+                break
         except:
             continue
 

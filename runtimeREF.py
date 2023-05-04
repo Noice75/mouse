@@ -8,3 +8,8 @@ HOSTIP = s.getsockname()[0]
 ACTIVEIP = s.getsockname()[0]
 ISSERVER = False
 fnDir = None
+clients = []
+
+def updateClients(arg):
+    global clients
+    clients = arg["Clients"]

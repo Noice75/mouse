@@ -35,6 +35,7 @@ def getClipboard():
 
 def onCopy():
     global currentClipboard
+    currentClipboard = getClipboard() # To not send clipboard data on startup
     while True:
         clipboardText = getClipboard()
         if (currentClipboard == clipboardText):
@@ -46,7 +47,6 @@ def onCopy():
             except:
                 continue
             currentClipboard = clipboardText
-            print(currentClipboard)
 
 
 if __name__ == "__main__":

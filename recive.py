@@ -27,6 +27,7 @@ runtimeREF.fnDir = {
     2: mouse.clickMouseButton,
     3: mouse.scroll,
     4: listners.setActiveIP,
+    5: runtimeREF.updateClients,
     50: listners.active,
     51: clipboard.setClipboard,
 }

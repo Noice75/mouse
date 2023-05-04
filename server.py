@@ -19,8 +19,23 @@ def sendAll(arg):
         clientSock.sendall(pickle.dumps(arg))
 
 
-def onClientConnect(clientSocket):
+def onClientConnect(clientSocket, clientAddr):
+    global clients
+    clients[clientSocket] = clientAddr
+    runtimeREF.clients = list(clients.values())
     clientSocket.sendall(pickle.dumps({"fn":4,"ACTIVEIP":runtimeREF.ACTIVEIP}))
+    sendAll({"fn":5,"Clients":runtimeREF.clients})
+
+def onClientDisconnect(sock):
+    global clients
+    if(clients[sock][0] == runtimeREF.ACTIVEIP):
+        runtimeREF.ACTIVEIP = runtimeREF.HOSTIP
+        sendAll({"fn":4,"ACTIVEIP":runtimeREF.ACTIVEIP})
+        threading.Thread(target=runtimeREF.fnDir[50], args=({"ACTIVEIP":runtimeREF.ACTIVEIP},)).start()
+    # remove client from list of clients if connection is closed
+    del clients[sock]
+    runtimeREF.clients = list(clients.values())
+    sendAll({"fn":5,"Clients":runtimeREF.clients})
 
 
 def server():
@@ -38,8 +53,7 @@ def server():
             if sock == s:
                 # accept the connection and add client to list of clients
                 clientSocket, clientAddress = s.accept()
-                clients[clientSocket] = clientAddress
-                onClientConnect(clientSocket=clientSocket)
+                onClientConnect(clientSocket=clientSocket, clientAddr=clientAddress)
                 print(f"New client connected: {clientAddress}")
 
             # if existing client has sent data
@@ -47,22 +61,11 @@ def server():
                 try:
                     data = sock.recv(1024)
                 except ConnectionResetError:
-                    if(clients[sock][0] == runtimeREF.ACTIVEIP):
-                        del clients[sock]
-                        runtimeREF.ACTIVEIP = runtimeREF.HOSTIP
-                        sendAll({"fn":4,"ACTIVEIP":runtimeREF.ACTIVEIP})
-                    else:
-                        del clients[sock]
+                    onClientDisconnect(sock=sock)
                     print("Client disconnected")
                     continue
                 if not data:
-                    # remove client from list of clients if connection is closed
-                    if(clients[sock][0] == runtimeREF.ACTIVEIP):
-                        del clients[sock]
-                        runtimeREF.ACTIVEIP = runtimeREF.HOSTIP
-                        sendAll({"fn":4,"ACTIVEIP":runtimeREF.ACTIVEIP})
-                    else:
-                        del clients[sock]
+                    onClientDisconnect(sock=sock)
                     print("Client disconnected")
                     continue
                 # unpickling after checks to prevent error `EOFError: Ran out of input`
