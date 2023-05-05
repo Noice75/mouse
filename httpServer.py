@@ -10,7 +10,6 @@ class RequestHandler(BaseHTTPRequestHandler):
         # filename = self.headers.get('Content-Disposition').split('=')[1].strip('"')
         self.send_response(200)
         self.end_headers()
-        self.wfile.write(b'Successfully received file\n')
 
 def startServer():
     port = 8000
