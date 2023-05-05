@@ -37,7 +37,7 @@ def clientConnListner():
     while True:
         try:
             data = client.connection.recv(1024)
-        except ConnectionResetError:
+        except ConnectionResetError: # TODO: Handel Server Disconnect
             print("Server disconnected")
             break
         if not data:
@@ -60,6 +60,7 @@ else:
     listners.activeThreads["server"] = server
     threading.Thread(target=listners.active,args=({"ACTIVEIP":runtimeREF.ACTIVEIP},)).start()
 
+print(f"UDP MULTICAST GROUP on {MCAST_GRP}:{MCAST_PORT}")
 while True:
     data = pickle.loads(sock.recv(1024))
     if (data["fn"] >= 50):  # Threaded function needs to have key > 50

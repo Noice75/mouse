@@ -18,4 +18,3 @@ def updateClients(arg):
         clients.remove(arg["Addr"])
     elif(arg["Task"] == 2):
         clients = arg["Clients"]
-    print(clients)

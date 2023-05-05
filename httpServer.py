@@ -16,7 +16,7 @@ def startServer():
     port = 8000
     server_address = (runtimeREF.HOSTIP, port)
     httpd = HTTPServer(server_address, RequestHandler)
-    print(f'Server running on port {port}')
+    print(f'HTTP Server listening on {runtimeREF.HOSTIP}:{port}')
     httpd.serve_forever()
 
 if __name__ == '__main__':

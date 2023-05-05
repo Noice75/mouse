@@ -24,7 +24,7 @@ def connect(ip_address):
         s.connect((ip_address, TCP_PORT))
         connection = s
         connection.settimeout(None)
-        print(f"Server at {ip_address}:{TCP_PORT}")
+        print(f"TCP Server at {ip_address}:{TCP_PORT}")
     except:
         s.close()
         pass

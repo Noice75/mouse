@@ -44,7 +44,7 @@ def server():
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     s.bind((runtimeREF.HOSTIP, port))
     s.listen(0)  # Set the maximum number of queued connections to infinity
-    print(f"Server listening on {runtimeREF.HOSTIP}:{port}")
+    print(f"TCP Server listening on {runtimeREF.HOSTIP}:{port}")
     runtimeREF.ACTIVEIP = runtimeREF.HOSTIP
     runtimeREF.ISSERVER = True
     runtimeREF.clients.append(runtimeREF.HOSTIP)

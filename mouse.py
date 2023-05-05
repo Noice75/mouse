@@ -102,7 +102,6 @@ def register_devices(hwnd=None):
         *(cws.RawInputDevice(HID_USAGE_PAGE_GENERIC, uid, flags, hwnd) for uid in generic_usage_ids)
     )
     if cws.RegisterRawInputDevices(devices, len(generic_usage_ids), ctypes.sizeof(cws.RawInputDevice)):
-        print("Successfully registered input device(s)!")
         return True
     else:
         print_error(text="RegisterRawInputDevices")
@@ -129,7 +128,6 @@ def getMouseRawInput():
         return 0
     msg = MSG()
     pmsg = ctypes.byref(msg)
-    print("Start loop (press <ESC> to exit)...")
     while res := cws.GetMessage(pmsg, None, 0, 0):
         if res < 0:
             print_error(text="GetMessage")
