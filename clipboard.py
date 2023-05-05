@@ -14,9 +14,9 @@ def setClipboard(arg):
         return
     win32clipboard.OpenClipboard()
     win32clipboard.EmptyClipboard()
-    win32clipboard.SetClipboardText(arg["data"])
+    win32clipboard.SetClipboardText(arg["data"].decode())
     win32clipboard.CloseClipboard()
-    currentClipboard = arg["data"]
+    currentClipboard = arg["data"].decode()
     print(currentClipboard)
 
 
@@ -47,6 +47,8 @@ def onCopy():
         else:
             try:
                 for i in runtimeREF.clients:
+                    if(i == runtimeREF.HOSTIP):
+                        continue
                     args = {
                         'url': f'http://{i}:8000/upload',
                         'data': clipboardText,
