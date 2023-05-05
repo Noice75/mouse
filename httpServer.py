@@ -14,7 +14,7 @@ class RequestHandler(BaseHTTPRequestHandler):
 
 def startServer():
     port = 8000
-    server_address = ('', port)
+    server_address = (runtimeREF.HOSTIP, port)
     httpd = HTTPServer(server_address, RequestHandler)
     print(f'Server running on port {port}')
     httpd.serve_forever()
