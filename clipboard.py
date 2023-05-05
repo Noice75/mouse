@@ -2,6 +2,8 @@ import win32clipboard
 from time import sleep
 import send
 import runtimeREF
+import requests
+import threading
 
 currentClipboard = None
 
@@ -12,9 +14,10 @@ def setClipboard(arg):
         return
     win32clipboard.OpenClipboard()
     win32clipboard.EmptyClipboard()
-    win32clipboard.SetClipboardText(arg["Text"])
+    win32clipboard.SetClipboardText(arg["data"])
     win32clipboard.CloseClipboard()
-    currentClipboard = arg["Text"]
+    currentClipboard = arg["data"]
+    print(currentClipboard)
 
 
 def getClipboard():
@@ -43,10 +46,17 @@ def onCopy():
             continue
         else:
             try:
-                send.sendALL(fn=51, Text=clipboardText)
+                for i in runtimeREF.clients:
+                    args = {
+                        'url': f'http://{i}:8000/upload',
+                        'data': clipboardText,
+                        'headers': {'Content-Type': 'application/octet-stream', 'Content-Disposition': f'attachment;', "fn":"51"},
+                    }
+                    threading.Thread(target=requests.post, kwargs=args).start()
             except:
                 continue
             currentClipboard = clipboardText
+            print(currentClipboard)
 
 
 if __name__ == "__main__":

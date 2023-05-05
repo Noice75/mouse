@@ -7,6 +7,7 @@ import mouse
 import keyboard
 import clipboard
 import runtimeREF
+import httpServer
 
 
 relativeClients = {"T": "192.168.1.105"}
@@ -21,8 +22,11 @@ rawMouseInput = threading.Thread(target=mouse.getMouseRawInput)
 rawMouseInput.start()
 onCopy = threading.Thread(target=clipboard.onCopy)
 onCopy.start()
+httpServerRef = threading.Thread(target=httpServer.startServer)
+httpServerRef.start()
 activeThreads["rawMouseInput"] = rawMouseInput
 activeThreads["onCopy"] = onCopy
+activeThreads["httpServerRef"] = httpServerRef
 mhook = mouse.listner()
 khook = keyboard.listner()
 
