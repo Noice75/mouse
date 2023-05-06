@@ -1,0 +1,3 @@
+1) Client stuck after server disconnects
+2) Mouse handel error in uac window
+3) No Input in uac window # Not a bug (blockd by windows)
